@@ -24,6 +24,10 @@ class PermissionSeeder extends Seeder
 
         // Create permissions for web and api guards
         foreach ($permissions as $permission) {
+            /* Check if permission exist */
+            if (\Spatie\Permission\Models\Permission::where('name', $permission)->first()) {
+                continue;
+            }
             \Spatie\Permission\Models\Permission::create(['name' => $permission]);
         }
     }

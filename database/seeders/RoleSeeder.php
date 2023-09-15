@@ -18,6 +18,10 @@ class RoleSeeder extends Seeder
         ];
 
         foreach ($roles as $role) {
+            /* Check if role exist */
+            if (\Spatie\Permission\Models\Role::where('name', $role)->first()) {
+                continue;
+            }
             \Spatie\Permission\Models\Role::create(['name' => $role]);
         }
 
