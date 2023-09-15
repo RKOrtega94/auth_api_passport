@@ -125,3 +125,47 @@ POST  /api/login
     ]
 }
 ```
+
+#### Register
+
+Registra un nuevo usuario.
+
+```bash
+POST  /api/register
+```
+
+| Parámetro             | Tipo   | Descripción                |
+| --------------------- | ------ | -------------------------- |
+| name                  | string | Nombre                     |
+| email                 | string | Email                      |
+| password              | string | Contraseña                 |
+| password_confirmation | string | Confirmación de contraseña |
+
+`Success response`
+
+```bash
+{
+    "status": true,
+    "message": "User register successfully.",
+    "data": {
+        "token": "tu-token-de-autenticacion",
+        "user": {
+            "name": "Nombre del Usuario",
+            "email": "correo@ejemplo.com"
+            // Otros datos del usuario que puedes agregar
+        }
+    }
+}
+```
+
+`Error Response`
+
+```bash
+{
+    "status": false,
+    "message": "Invalid register details.",
+    "errors": [
+        // Lista de errores
+    ]
+}
+```
