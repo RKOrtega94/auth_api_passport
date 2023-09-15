@@ -19,38 +19,7 @@ class PermissionSeeder extends Seeder
             'update-user',
             'delete-user',
 
-            // Manage roles
-            'create-role',
-            'read-role',
-            'update-role',
-            'delete-role',
-            'assign-role',
-
-            // Manage clinics
-            'create-clinic',
-            'read-clinic',
-            'update-clinic',
-            'delete-clinic',
-
-            // Manage contracts
-            'create-contract',
-            'read-contract',
-            'update-contract',
-            'delete-contract',
-            'sign-contract',
-
-            // Manage suppliers
-            'create-supplier',
-            'read-supplier',
-            'update-supplier',
-            'delete-supplier',
-
-            // Manage products
-            'create-product',
-            'read-product',
-            'update-product',
-            'delete-product',
-
+            // Add more permissions as needed here
         ];
 
         // Create permissions for web and api guards

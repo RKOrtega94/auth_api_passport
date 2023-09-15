@@ -13,10 +13,7 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         $roles = [
-            'super-admin',
             'admin',
-            'manager',
-            'doctor',
             'user',
         ];
 
@@ -27,10 +24,19 @@ class RoleSeeder extends Seeder
         // Assign permissions to roles
 
         // Super admin
-        $superAdmin = \Spatie\Permission\Models\Role::findByName('super-admin');
+        $admin = \Spatie\Permission\Models\Role::findByName('admin');
 
-        // Asign all permissions to super admin 'api' guard
         $permissions = \Spatie\Permission\Models\Permission::all();
-        $superAdmin->syncPermissions($permissions);
+        $admin->syncPermissions($permissions);
+
+        // User
+        $user = \Spatie\Permission\Models\Role::findByName('user');
+
+        $permissions = [
+            'read-user',
+        ];
+
+        $permissions = \Spatie\Permission\Models\Permission::whereIn('name', $permissions)->get();
+        $user->syncPermissions($permissions);
     }
 }
