@@ -17,6 +17,7 @@ Sistema básico de autenticación para Api REST con Laravel/Passport y un crud d
 -   [Endpoints](#endpoints)
     -   [Autenticación](#autenticación)
         -   [Login](#login)
+        -   [Register](#register)
 
 ## Instalación
 
