@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
+use Twilio\Rest\Client;
 
 class Controller extends BaseController
 {
@@ -47,5 +49,36 @@ class Controller extends BaseController
         }
 
         return response()->json($response, $code);
+    }
+
+    /**
+     * Send SMS to user
+     *
+     * @param string $phone
+     * @param string $message
+     *
+     * @return bool
+     */
+    function sendSMS($phone, $message): bool
+    {
+        try {
+            $accountSid = env('TWILIO_SID');
+            $authToken = env('TWILIO_AUTH_TOKEN');
+            $twilioNumber = env('TWILIO_NUMBER');
+
+            $client = new Client($accountSid, $authToken);
+
+            $client->messages->create(
+                $phone,
+                [
+                    'from' => $twilioNumber,
+                    'body' => $message
+                ]
+            );
+
+            return true;
+        } catch (\Throwable $th) {
+            throw new Exception($th->getMessage(), 1);
+        }
     }
 }

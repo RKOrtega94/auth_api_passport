@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -77,7 +78,14 @@ class AuthController extends Controller
             // Temp code random 6 digits
             $code = rand(100000, 999999);
 
-            $user->code = $code;
+            $user->code = Hash::make($code);
+
+            $user->save();
+
+            // Send SMS to user
+            $this->sendSMS($user->phone, "Your code is: $code");
+
+            return $this->sendResponse($user->name, 'Code sent successfully to your phone ' . $user->phone);
         } catch (\Throwable $th) {
             return $this->sendError($th->getMessage(), [], 500);
         }

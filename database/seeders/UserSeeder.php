@@ -19,11 +19,13 @@ class UserSeeder extends Seeder
 
         $name = $this->command->ask('Admin name?:', 'Admin');
         $email = $this->command->ask('Admin email?:', 'admin@email.com');
+        $phone = $this->command->ask('Admin phone?:', '123456789');
         $password = $this->command->ask('Admin password?:', 'password');
 
         $user = User::create([
             'name' => $name,
             'email' => $email,
+            'phone' => $phone,
             'password' => Hash::make($password),
         ]);
 
