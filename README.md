@@ -14,7 +14,7 @@ Sistema básico de autenticación para Api REST con Laravel/Passport y un crud d
 
 -   [Instalación](#instalación)
 -   [Seeder](#seeder)
--   [Twilio](#twilio)
+-   [Twilio - SMS service](#twilio)
 -   [Endpoints](#endpoints)
     -   [Autenticación](#autenticación)
         -   [Login](#login)
