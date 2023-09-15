@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -21,14 +23,20 @@ class AuthController extends Controller
         try {
             $credentials = $request->only(['email', 'password']);
 
+            Log::info($credentials);
+
             if (!$token = auth()->attempt($credentials)) {
+                Log::info('Unauthorized');
                 return $this->sendError('Unauthorized', [], 401);
             }
 
-            $user = auth()->user();
+            $user = User::where('email', $request->email)->first();
+
+            $token = $user->createToken(env('APP_KEY'))->accessToken;
 
             return $this->sendResponse(['token' => $token, 'user' => $user], 'User login successfully.');
         } catch (\Throwable $th) {
+            Log::error($th->getMessage());
             return $this->sendError($th->getMessage(), [], 500);
         }
     }
@@ -49,8 +57,6 @@ class AuthController extends Controller
             $user = User::create($data);
 
             $user->assignRole('user');
-
-            $user->token = $user->createToken('secret')->plainTextToken;
 
             return $this->sendResponse($user, 'User register successfully.');
         } catch (\Throwable $th) {
@@ -86,6 +92,25 @@ class AuthController extends Controller
             $this->sendSMS($user->phone, "Your code is: $code");
 
             return $this->sendResponse($user->name, 'Code sent successfully to your phone ' . $user->phone);
+        } catch (\Throwable $th) {
+            return $this->sendError($th->getMessage(), [], 500);
+        }
+    }
+
+    /**
+     * Logout user (Revoke the token)
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    function logout(Request $request): JsonResponse
+    {
+        try {
+            Log::info($request->user()->token());
+
+            $request->user()->token()->revoke();
+
+            return $this->sendResponse([], 'User logout successfully.');
         } catch (\Throwable $th) {
             return $this->sendError($th->getMessage(), [], 500);
         }

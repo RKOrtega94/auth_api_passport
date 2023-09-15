@@ -24,3 +24,11 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('forgot-password', 'forgotPassword'); // /api/forgot-password
     Route::post('reset-password', 'resetPassword'); // /api/reset-password
 });
+
+// Routes with auth middleware
+Route::middleware('auth:api')->group(function () {
+    // Auth routes
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('logout', 'logout'); // /api/logout
+    });
+});
