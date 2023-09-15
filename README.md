@@ -1,5 +1,7 @@
 # Auth API REST - Laravel / Passport
 
+## Descripción
+
 Sistema básico de autenticación para Api REST con Laravel/Passport y un crud de usuarios.
 
 Éste proyecto utiliza las librerías:
@@ -7,6 +9,11 @@ Sistema básico de autenticación para Api REST con Laravel/Passport y un crud d
 -   [Laravel Passport](https://laravel.com/docs/10.x/passport)
 
 -   [Spatie Laravel - permission](https://spatie.be/docs/laravel-permission/v5/introduction)
+
+### Contenido
+
+-   [Instalación](#instalación)
+-   [Seeder](#seeder)
 
 ## Instalación
 
@@ -68,4 +75,50 @@ También te permitirá crear la cantidad de usuarios con `faker` que pases por a
 Do you want to create random users? (yes/no) [no]: yes
 How many users  do you want to create?: [10]:
 Random users created successfully.
+```
+
+## Endpoints
+
+### Autenticación
+
+#### Login
+
+Devuelve un token de acceso para el usuario.
+
+```bash
+POST  /api/login
+```
+
+| Parámetro | Tipo   | Descripción |
+| --------- | ------ | ----------- |
+| email     | string | Email       |
+| password  | string | Contraseña  |
+
+`Success Response`
+
+```bash
+{
+    "status": true,
+    "message": "User login successfully.",
+    "data": {
+        "token": "tu-token-de-autenticacion",
+        "user": {
+            "name": "Nombre del Usuario",
+            "email": "correo@ejemplo.com"
+            // Otros datos del usuario que puedes agregar
+        }
+    }
+}
+```
+
+`Error Response`
+
+```bash
+{
+    "status": false,
+    "message": "Invalid login details.",
+    "errors": [
+        // Lista de errores
+    ]
+}
 ```
