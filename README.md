@@ -54,6 +54,12 @@ php  artisan  key:generate
 php  artisan  migrate  --seed
 ```
 
+7. Por último ejecutar `passport:install`
+
+```bash
+php artisan passport:install
+```
+
 ## Seeder
 
 Para ejecutar el `seeder` puedes utilizar los comandos artisan `php artisan db:seed` o `php artisan migrate --seed` o `php artisan migrate:fresh --seed`
